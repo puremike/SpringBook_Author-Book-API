@@ -12,7 +12,8 @@ import javax.sql.DataSource;
 @Log
 public class DbApplication implements CommandLineRunner {
 
-    private DataSource dataSource;
+    // KEEP FOR DAO TESTING PURPOSES
+    private final DataSource dataSource;
 
     private DbApplication(DataSource dataSource) {
         this.dataSource = dataSource;

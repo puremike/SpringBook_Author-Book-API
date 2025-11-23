@@ -14,4 +14,5 @@ public interface BookDao {
 
     void updateBookByISBN(Book book, String isbn);
 
+    void deleteBookByISBN(String isbn);
 };

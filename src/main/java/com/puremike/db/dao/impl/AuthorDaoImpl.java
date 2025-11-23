@@ -61,4 +61,10 @@ public class AuthorDaoImpl implements AuthorDao {
         jdbcTemplate.update(sql, author.getName(), author.getAge(), authorId);
     }
 
+    // @Transactional
+    public void deleteAuthorById(Long id) {
+        String sql = "DELETE FROM authors WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
+
 }
