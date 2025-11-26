@@ -28,7 +28,7 @@ public class BookDaoImplIntegrationTests {
         this.authorDao = authorDao;
     }
 
-    private Author author = TestDataUtils.createTestAuthor();
+    private final Author author = TestDataUtils.createTestAuthor();
 
     @Test
     public void testThatBookCanBeCreatedAndRetrieved() {
