@@ -3,16 +3,16 @@ package com.puremike.db.dao;
 import java.util.List;
 import java.util.Optional;
 
-import com.puremike.db.domain.Book;
+import com.puremike.db.domain.BookEntity;
 
 public interface BookDao {
-    void createBook(Book book);
+    void createBook(BookEntity book);
 
-    Optional<Book> findBookByISBN(String isbn);
+    Optional<BookEntity> findBookByISBN(String isbn);
 
-    List<Book> findBooks();
+    List<BookEntity> findBooks();
 
-    void updateBookByISBN(Book book, String isbn);
+    void updateBookByISBN(BookEntity book, String isbn);
 
     void deleteBookByISBN(String isbn);
 };

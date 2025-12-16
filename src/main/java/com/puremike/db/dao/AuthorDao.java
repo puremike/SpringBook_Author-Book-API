@@ -3,16 +3,16 @@ package com.puremike.db.dao;
 import java.util.List;
 import java.util.Optional;
 
-import com.puremike.db.domain.Author;
+import com.puremike.db.domain.AuthorEntity;
 
 public interface AuthorDao {
-    void createAuthor(Author author);
+    void createAuthor(AuthorEntity author);
 
-    Optional<Author> findAuthorById(long authorId);
+    Optional<AuthorEntity> findAuthorById(long authorId);
 
-    List<Author> findAuthors();
+    List<AuthorEntity> findAuthors();
 
-    void updateAuthorById(Author author, long authorId);
+    void updateAuthorById(AuthorEntity author, long authorId);
 
     void deleteAuthorById(Long id);
 }

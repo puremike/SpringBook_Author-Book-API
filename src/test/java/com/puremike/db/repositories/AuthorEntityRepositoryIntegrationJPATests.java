@@ -4,33 +4,32 @@ import java.util.Optional;
 
 import com.puremike.db.TestDataJPAUtils;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-import com.puremike.db.domain.Author;
+import com.puremike.db.domain.AuthorEntity;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class AuthorRepositoryIntegrationJPATests {
+public class AuthorEntityRepositoryIntegrationJPATests {
 
     private final AuthorRepository underTest;
 
     @Autowired
-    public AuthorRepositoryIntegrationJPATests(AuthorRepository underTest) {
+    public AuthorEntityRepositoryIntegrationJPATests(AuthorRepository underTest) {
         this.underTest = underTest;
     }
 
     @Test
     public void testThatAuthorCanBeCreatedAndRetrieved() {
-        Author author = TestDataJPAUtils.createTestAuthor();
+        AuthorEntity author = TestDataJPAUtils.createTestAuthor();
         underTest.save(author);
-        Optional<Author> result = underTest.findById(author.getId());
+        Optional<AuthorEntity> result = underTest.findById(author.getId());
 
         assertThat(result).isPresent();
-        Author persisted = result.get();
+        AuthorEntity persisted = result.get();
         assertThat(persisted.getId()).isEqualTo(author.getId());
         assertThat(persisted.getName()).isEqualTo(author.getName());
         assertThat(persisted.getAge()).isEqualTo(author.getAge());
@@ -39,16 +38,16 @@ public class AuthorRepositoryIntegrationJPATests {
 
     @Test
     public void testThatAuthorsCanBeCreatedAndRetrieved() {
-        Author author = TestDataJPAUtils.createTestAuthor();
+        AuthorEntity author = TestDataJPAUtils.createTestAuthor();
         underTest.save(author);
 
-        Author authorA = TestDataJPAUtils.createTestAuthorA();
+        AuthorEntity authorA = TestDataJPAUtils.createTestAuthorA();
         underTest.save(authorA);
 
-        Author authorB = TestDataJPAUtils.createTestAuthorB();
+        AuthorEntity authorB = TestDataJPAUtils.createTestAuthorB();
         underTest.save(authorB);
 
-        Iterable<Author> result = underTest.findAll();
+        Iterable<AuthorEntity> result = underTest.findAll();
         assertThat(result)
                 .hasSize(3)
                 .containsExactlyInAnyOrder(author, authorA, authorB);
@@ -56,12 +55,12 @@ public class AuthorRepositoryIntegrationJPATests {
 
     @Test
     public void testThatAuthorCanBeUpdated() {
-        Author author = TestDataJPAUtils.createTestAuthorC();
+        AuthorEntity author = TestDataJPAUtils.createTestAuthorC();
         underTest.save(author);
         author.setName("Stephen UPDATED");
 
         underTest.save(author);
-        Optional<Author> result = underTest.findById(author.getId());
+        Optional<AuthorEntity> result = underTest.findById(author.getId());
 
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(author);
@@ -69,42 +68,43 @@ public class AuthorRepositoryIntegrationJPATests {
 
     @Test
     public void testThatAuthorCanBeCreatedAndDeleted() {
-        Author author = TestDataJPAUtils.createTestAuthorC();
+        AuthorEntity author = TestDataJPAUtils.createTestAuthorC();
         underTest.save(author);
 
         underTest.deleteById(author.getId());
-        Optional<Author> result = underTest.findById(author.getId());
+        Optional<AuthorEntity> result = underTest.findById(author.getId());
 
         assertThat(result).isEmpty();
     }
 
     @Test
     public void testThatAuthorsAgeAreGreaterThan() {
-        Author author = TestDataJPAUtils.createTestAuthor();
+        AuthorEntity author = TestDataJPAUtils.createTestAuthor();
         underTest.save(author);
-        Author authorA = TestDataJPAUtils.createTestAuthorA();
+        AuthorEntity authorA = TestDataJPAUtils.createTestAuthorA();
         underTest.save(authorA);
-        Author authorB = TestDataJPAUtils.createTestAuthorB();
+        AuthorEntity authorB = TestDataJPAUtils.createTestAuthorB();
         underTest.save(authorB);
-        Author authorC = TestDataJPAUtils.createTestAuthorC();
+        AuthorEntity authorC = TestDataJPAUtils.createTestAuthorC();
         underTest.save(authorC);
 
-        Iterable<Author> result = underTest.ageGreaterThan(26); // SPRING JPA automatically created the method under the hood
+        Iterable<AuthorEntity> result = underTest.ageGreaterThan(26); // SPRING JPA automatically created the method
+                                                                      // under the hood
         assertThat(result).containsExactly(authorA, authorB, authorC);
     }
 
     @Test
     public void testThatAuthorsAgeAreLessThan() {
-        Author author = TestDataJPAUtils.createTestAuthor();
+        AuthorEntity author = TestDataJPAUtils.createTestAuthor();
         underTest.save(author);
-        Author authorA = TestDataJPAUtils.createTestAuthorA();
+        AuthorEntity authorA = TestDataJPAUtils.createTestAuthorA();
         underTest.save(authorA);
-        Author authorB = TestDataJPAUtils.createTestAuthorB();
+        AuthorEntity authorB = TestDataJPAUtils.createTestAuthorB();
         underTest.save(authorB);
-        Author authorC = TestDataJPAUtils.createTestAuthorC();
+        AuthorEntity authorC = TestDataJPAUtils.createTestAuthorC();
         underTest.save(authorC);
 
-        Iterable<Author> result = underTest.findAuthorsAgeLessThan(30);
+        Iterable<AuthorEntity> result = underTest.findAuthorsAgeLessThan(30);
         assertThat(result).containsExactly(author, authorA);
     }
 }
